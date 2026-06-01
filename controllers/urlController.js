@@ -5,7 +5,11 @@ const createShortUrl = async (req, res) => {
     try {
         const { originalUrl } = req.body;
 
-        const shortCode = generateShortCode();
+        let shortCode;
+
+        do {
+            shortCode = generateShortCode();
+        } while (await Url.findOne({ shortCode }));
 
         const url = await Url.create({
             originalUrl,
@@ -22,6 +26,7 @@ const createShortUrl = async (req, res) => {
 };
 
 const redirectUrl = async (req, res) => {
+    console.log("Trying");
     try {
         const { shortCode } = req.params;
 
@@ -33,8 +38,11 @@ const redirectUrl = async (req, res) => {
             });
         }
 
+        console.log("Hello see this: ",url);
+
         url.clicks += 1;
         await url.save();
+        console.log(url);
 
         res.redirect(url.originalUrl);
 
