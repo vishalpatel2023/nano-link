@@ -16,7 +16,10 @@ const createShortUrl = async (req, res) => {
             shortCode
         });
 
-        res.status(201).json(url);
+        // res.status(201).json(url);
+        res.render('result', {
+            shortCode: url.shortCode
+        });
 
     } catch (error) {
         res.status(500).json({
