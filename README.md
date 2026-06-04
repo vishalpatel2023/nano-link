@@ -43,7 +43,7 @@ MONGO_URI=your_mongodb_connection_string
 Start the application:
 
 ```bash
-npm run dev
+npm start
 ```
 
 or

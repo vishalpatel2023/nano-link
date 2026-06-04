@@ -17,9 +17,8 @@
             </div>
 
             <div class="result-box">
-                <a href="/<%= shortCode %>" target="_blank" class="short-url-link">
-                    http://localhost:3000/<%= shortCode %>
-                </a>
+                <a href="/<%= shortCode %>" target="_blank" class="short-url-link" id="shortUrl">http://localhost:3000/<%= shortCode %></a>
+                <button id="copyBtn" class="btn-copy">Copy 📋</button>
             </div>
 
             <div class="action-area">
@@ -27,6 +26,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const copyBtn = document.getElementById('copyBtn');
+        const shortUrlLink = document.getElementById('shortUrl');
+
+        copyBtn.addEventListener('click', async () => {
+            const textToCopy = shortUrlLink.innerText.trim();
+
+            try {
+                //Using the modern Browser Clipboard API to copy text
+                await navigator.clipboard.writeText(textToCopy);
+                
+                copyBtn.innerText = "Copied! ✅";
+                copyBtn.classList.add('copied');
+
+                //Reset button back to normal after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerText = "Copy 📋";
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+
+            } catch (err) {
+                console.error("Failed to copy text: ", err);
+                alert("Oops, couldn't copy automatically. Please select and copy manually!");
+            }
+        });
+    </script>
 
 </body>
 </html>

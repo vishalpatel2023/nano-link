@@ -5,6 +5,7 @@ const path = require('path');
 
 
 const urlRoutes = require('./routes/urlRoutes');
+const urlController = require('./controllers/urlController');
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ app.get("/",(req,res)=>{
 
 app.use('/api/url', urlRoutes);
 
-// take a url from fronted--> map it to a short variable name
+app.get('/:shortCode', urlController.redirectUrl);
 
 app.listen(process.env.PORT,()=>{
     console.log(`project is running on ${process.env.PORT} \n`);

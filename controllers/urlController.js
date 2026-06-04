@@ -1,9 +1,24 @@
 const Url = require('../models/url');
 const generateShortCode = require('../utils/generateShortCode');
 
+const {isValidUrl} = require('../utils/isValidUrl');
+
 const createShortUrl = async (req, res) => {
     try {
-        const { originalUrl } = req.body;
+        let { originalUrl } = req.body;
+
+        originalUrl = isValidUrl(originalUrl);
+
+        if(!originalUrl){
+            return res.status(400).json({ 
+                error: "Invalid URL provided. Please enter a valid website." 
+            });
+        }
+
+        console.log("Updated URL: ",originalUrl);
+
+        // bug to fix? if same url exist in database just return it from there do not create new shortcode
+        
 
         let shortCode;
 
