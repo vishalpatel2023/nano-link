@@ -17,6 +17,7 @@ const createShortUrl = async (req, res) => {
         });
 
         // res.status(201).json(url);
+        // console.log("ese dekhoooo: ",url.shortCode);
         res.render('result', {
             shortCode: url.shortCode
         });
@@ -33,19 +34,24 @@ const redirectUrl = async (req, res) => {
     try {
         const { shortCode } = req.params;
 
+        //console.log("SHort code is: ",shortCode);
+
         const url = await Url.findOne({ shortCode });
+
+        //debugging 
+        //console.log("Here url is: ",url);
 
         if (!url) {
             return res.status(404).json({
-                message: 'URL not found'
+                message: 'URL not found Hmmm'
             });
         }
 
-        console.log("Hello see this: ",url);
+        //console.log("Hello see this: ",url);
 
         url.clicks += 1;
         await url.save();
-        console.log(url);
+        //console.log(url);
 
         res.redirect(url.originalUrl);
 
