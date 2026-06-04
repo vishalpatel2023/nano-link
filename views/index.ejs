@@ -1,26 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>URL Shortener</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapLink | Modern URL Shortener</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <h1>URL Shortener</h1>
+    <div class="container">
+        <div class="shortener-card">
+            <div class="logo-area">
+                <span class="logo-icon">🔗</span>
+                <h1>SnapLink</h1>
+                <p class="subtitle">Shorten your messy links instantly.</p>
+            </div>
 
-    <form action="/api/url/shorten" method="POST">
+            <form action="/api/url/shorten" method="POST" class="shorten-form">
+                <div class="input-group">
+                    <input
+                        type="url"
+                        name="originalUrl"
+                        placeholder="Paste your long link here (e.g., https://google.com)"
+                        required
+                        autocomplete="off"
+                    >
+                </div>
 
-        <input
-            type="text"
-            name="originalUrl"
-            placeholder="Enter URL"
-            required
-        >
-
-        <button type="submit">
-            Shorten
-        </button>
-
-    </form>
+                <button type="submit" class="btn-submit">
+                    Shorten Link <span>⚡</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>

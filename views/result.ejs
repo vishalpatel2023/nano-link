@@ -1,19 +1,32 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Short URL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Link is Ready! | SnapLink</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
-
 <body>
 
-    <h2>Your Short URL</h2>
+    <div class="container">
+        <div class="shortener-card result-card">
+            <div class="logo-area">
+                <span class="logo-icon success-icon">🎉</span>
+                <h1>Boom! Shortened.</h1>
+                <p class="subtitle">Your clean, optimized link is ready to share.</p>
+            </div>
 
-    <a href="/api/url/<%= shortCode %>">
-        http://localhost:5000/api/url/<%= shortCode %>
-         <!-- vishal -->
-    </a>
+            <div class="result-box">
+                <a href="/<%= shortCode %>" target="_blank" class="short-url-link">
+                    http://localhost:3000/<%= shortCode %>
+                </a>
+            </div>
+
+            <div class="action-area">
+                <a href="/" class="btn-secondary">← Shorten another URL</a>
+            </div>
+        </div>
+    </div>
 
 </body>
-
 </html>
