@@ -15,10 +15,15 @@ const urlSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users', // it points to the users collection we will make next
+            required: true,
+        },
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = mongoose.model("Url",urlSchema);
+module.exports = mongoose.model("Url", urlSchema);
