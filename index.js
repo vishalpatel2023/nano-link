@@ -6,6 +6,7 @@ const path = require('path');
 
 const urlRoutes = require('./routes/urlRoutes');
 const urlController = require('./controllers/urlController');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -20,11 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use(express.json());
+app.use('/', userRoutes);
 
-app.get("/",(req,res)=>{
-    // res.send("Home page");
-    res.render('index');
-});
+
+// app.get("/",(req,res)=>{
+//     // res.send("Home page");
+//     res.render('index');
+// });
 
 
 app.use('/api/url', urlRoutes);

@@ -36,6 +36,37 @@ async function handleUserSignup(req, res) {
     }
 }
 
+// Handle User Login
+async function handleUserLogin(req, res) {
+    const { email, password } = req.body;
+
+    console.log("Form Submitted Email:", email);
+    console.log("Form Submitted Password:", password);
+
+    try {
+        // Find user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).send("Invalid email or password.");
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log(isMatch);
+
+        if (!isMatch) {
+            return res.status(400).send("Invalid email or password.");
+        }
+
+        // 3. Success! hahaha send them to the homepage.
+        return res.redirect('/');
+
+    } catch (error) {
+        console.error("Login Error:", error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     handleUserSignup,
+    handleUserLogin,
 };

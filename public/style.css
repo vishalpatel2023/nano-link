@@ -1,4 +1,4 @@
-/* Base Reset and Fonts */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +7,8 @@
 }
 
 body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-    color: #f8fafc;
+    background-color: #121212;
+    color: #eaeaea;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -19,53 +19,37 @@ body {
 .container {
     width: 100%;
     max-width: 540px;
-    perspective: 1000px;
 }
 
-/* Card Styling */
 .shortener-card {
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
+    background-color: #1e1e1e; 
+    border: 1px solid #333;
+    border-radius: 8px; 
     padding: 40px 30px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
     text-align: center;
-    animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .logo-area {
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
-.logo-icon {
+.logo-icon, .success-icon {
     font-size: 3rem;
     display: inline-block;
     margin-bottom: 10px;
-    filter: drop-shadow(0 0 10px #6366f1);
-}
-
-.success-icon {
-    filter: drop-shadow(0 0 10px #10b981);
 }
 
 h1 {
     font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    background: linear-gradient(to right, #6366f1, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #ffffff; 
     margin-bottom: 8px;
 }
 
 .subtitle {
-    color: #94a3b8;
+    color: #b0b0b0;
     font-size: 1rem;
 }
 
@@ -77,56 +61,47 @@ h1 {
 
 .input-group input {
     width: 100%;
-    padding: 16px 20px;
+    padding: 12px;
     font-size: 1rem;
-    background: rgba(15, 23, 42, 0.6);
-    border: 2px solid rgba(99, 102, 241, 0.2);
-    border-radius: 14px;
-    color: #fff;
+    background-color: #121212;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ffffff;
     outline: none;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .input-group input:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-    background: rgba(15, 23, 42, 0.9);
+    border-color: #ffffff;
 }
 
-/* Button Stylings */
 .btn-submit {
     width: 100%;
-    padding: 16px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: white;
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    padding: 12px;
+    background-color: #ffffff;
+    color: #000000;
     border: none;
-    border-radius: 14px;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
-    filter: brightness(1.1);
+    background-color: #cccccc;
 }
 
 .btn-submit:active {
-    transform: translateY(1px);
+    transform: scale(0.98);
 }
 
 .result-box {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px dashed rgba(16, 185, 129, 0.4);
+    background-color: #121212;
+    border: 1px dashed #444;
     padding: 14px 20px;
-    border-radius: 14px;
+    border-radius: 4px;
     margin-bottom: 30px;
-    word-break: break-all;
-    
-    /* Elements will line up horizontally with equal spacing */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -134,58 +109,57 @@ h1 {
 }
 
 .short-url-link {
-    color: #34d399;
+    color: #ffffff;
     font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.2s ease;
+    font-weight: 500;
+    text-decoration: underline;
     text-align: left;
     flex: 1; 
     min-width: 0;
+    word-break: break-all;
+    transition: color 0.2s ease;
 }
 
 .short-url-link:hover {
-    color: #6ee7b7;
-    text-decoration: underline;
+    color: #cccccc;
 }
 
-/* Clipboard Button Layout */
+
 .btn-copy {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #fff;
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
     padding: 8px 16px;
     font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 8px;
+    font-weight: bold;
+    border-radius: 4px;
     cursor: pointer;
-    white-space: nowrap; /* Forces text to stay on one line */
+    white-space: nowrap;
     transition: all 0.2s ease;
 }
 
 .btn-copy:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .btn-copy.copied {
-    background: #10b981;
-    border-color: #10b981;
-    color: #fff;
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .action-area {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .btn-secondary {
-    color: #94a3b8;
+    color: #b0b0b0;
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
 .btn-secondary:hover {
-    color: #f8fafc;
+    color: #ffffff;
+    text-decoration: underline;
 }
