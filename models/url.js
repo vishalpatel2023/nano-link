@@ -17,7 +17,7 @@ const urlSchema = new mongoose.Schema(
         },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'users', // it points to the users collection we will make next
+            ref: 'User', // importantt
             required: true,
         },
     },

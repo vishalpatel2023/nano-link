@@ -18,7 +18,14 @@ const createShortUrl = async (req, res) => {
         console.log("Updated URL: ",originalUrl);
 
         // bug to fix? if same url exist in database just return it from there do not create new shortcode
+        const existingUrl = await Url.findOne({ originalUrl });
         
+        if (existingUrl) {
+            // If it exists, skip creation and render the existing shortcode immediately
+            return res.render('result', {
+                shortCode: existingUrl.shortCode
+            });
+        }
 
         let shortCode;
 
@@ -26,9 +33,12 @@ const createShortUrl = async (req, res) => {
             shortCode = generateShortCode();
         } while (await Url.findOne({ shortCode }));
 
+        console.log("Updated URL: ",shortCode);
+
         const url = await Url.create({
             originalUrl,
-            shortCode
+            shortCode,
+            createdBy: req.user.id
         });
 
         // res.status(201).json(url);
