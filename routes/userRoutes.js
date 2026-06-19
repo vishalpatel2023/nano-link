@@ -17,5 +17,12 @@ router.post('/register', handleUserSignup);
 router.get('/login', (req, res) => {
     return res.render('login'); 
 });
+
+//logout route
+router.get('/logout', (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 }); //deletes cookie instantly ╰(*°▽°*)╯
+    res.redirect('/');
+});
+
 router.post('/login', handleUserLogin);
 module.exports = router;

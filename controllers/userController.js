@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Handle User Registration
 async function handleUserSignup(req, res) {
@@ -27,7 +28,7 @@ async function handleUserSignup(req, res) {
             password: hashedPassword,
         });
 
-        // Successfully registered now Redirect them to the login page
+        // Successfully registered now Redirect to the login page
         return res.redirect('/login');
 
     } catch (error) {
@@ -57,7 +58,18 @@ async function handleUserLogin(req, res) {
             return res.status(400).send("Invalid email or password.");
         }
 
-        // 3. Success! hahaha send them to the homepage.
+        //token containing the user's ID
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { 
+            expiresIn: '3d' // expires in 3 days
+        });
+
+        // Send the token in a cookie
+        res.cookie('jwt', token, { 
+            httpOnly: true, 
+            maxAge: 3 * 24 * 60 * 60 * 1000 //in milleisecond
+        });
+
+        //Success! hahaha send them to the homepage.
         return res.redirect('/');
 
     } catch (error) {
