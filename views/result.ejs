@@ -4,28 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Link is Ready! | SnapLink</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/index_style.css">
 </head>
 <body>
 
-    <div class="container">
-        <div class="shortener-card result-card">
-            <div class="logo-area">
-                <span class="logo-icon success-icon">🎉</span>
-                <h1>Boom! Shortened.</h1>
-                <p class="subtitle">Your clean, optimized link is ready to share.</p>
-            </div>
+    <header class="app-header">
+        <div class="header-logo">SnapLink</div>
+        <nav class="header-nav">
+            <% if (locals.user) { %>
+                <span class="nav-link" style="cursor: default;">👤 <%= user.email %></span>
+                <a href="/logout" class="nav-btn" style="background-color: #ff4d4d; color: white; border: none;">Logout</a>
+            <% } else { %>
+                <a href="/login" class="nav-link">Login</a>
+                <a href="/register" class="nav-btn">Sign Up</a>
+            <% } %>
+        </nav>
+    </header>
 
-            <div class="result-box">
-                <a href="/<%= shortCode %>" target="_blank" class="short-url-link" id="shortUrl">http://localhost:3000/<%= shortCode %></a>
-                <button id="copyBtn" class="btn-copy">Copy 📋</button>
-            </div>
+    <main class="main-content">
+        <div class="container">
+            <div class="shortener-card result-card">
+                <div class="logo-area">
+                    <span class="logo-icon success-icon">🎉</span>
+                    <h1>Boom! Shortened.</h1>
+                    <p class="subtitle">Your clean, optimized link is ready to share.</p>
+                </div>
 
-            <div class="action-area">
-                <a href="/" class="btn-secondary">← Shorten another URL</a>
+                <div class="result-box">
+                    <a href="/<%= shortCode %>" target="_blank" class="short-url-link" id="shortUrl">http://localhost:3000/<%= shortCode %></a>
+                    <button id="copyBtn" class="btn-copy">Copy 📋</button>
+                </div>
+
+                <div class="action-area">
+                    <a href="/" class="btn-secondary">← Shorten another URL</a>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 SnapLink. All rights reserved.</p>
+    </footer>
 
     <script>
         const copyBtn = document.getElementById('copyBtn');
@@ -35,13 +54,11 @@
             const textToCopy = shortUrlLink.innerText.trim();
 
             try {
-                //Using the modern Browser Clipboard API to copy text
                 await navigator.clipboard.writeText(textToCopy);
                 
                 copyBtn.innerText = "Copied! ✅";
                 copyBtn.classList.add('copied');
 
-                //Reset button back to normal after 2 seconds
                 setTimeout(() => {
                     copyBtn.innerText = "Copy 📋";
                     copyBtn.classList.remove('copied');
@@ -53,6 +70,5 @@
             }
         });
     </script>
-
 </body>
 </html>

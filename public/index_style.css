@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #eaeaea;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #333;
+}
+
+.header-logo {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.header-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.nav-link {
+    color: #cccccc;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+}
+
+.nav-btn {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.nav-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.nav-btn:active {
+    transform: scale(0.98);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 540px;
+}
+
+.shortener-card {
+    background-color: #1e1e1e; 
+    border: 1px solid #333;
+    border-radius: 8px; 
+    padding: 40px 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.logo-area {
+    margin-bottom: 30px;
+}
+
+.logo-icon, .success-icon {
+    font-size: 3rem;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #ffffff; 
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #b0b0b0;
+    font-size: 1rem;
+}
+
+.shorten-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #121212;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #ffffff;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+    background-color: #cccccc;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+.result-box {
+    background-color: #121212;
+    border: 1px dashed #444;
+    padding: 14px 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.short-url-link {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-align: left;
+    flex: 1; 
+    min-width: 0;
+    word-break: break-all;
+    transition: color 0.2s ease;
+}
+
+.short-url-link:hover {
+    color: #cccccc;
+}
+
+.btn-copy {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.btn-copy:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn-copy.copied {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.action-area {
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.btn-secondary:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.app-footer {
+    text-align: center;
+    padding: 20px;
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    border-top: 1px solid #333;
+    background-color: #1e1e1e;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-email {
+    color: #cccccc;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: default;
+}
+
+.logout-btn {
+    background-color: #ff4757 !important;
+    color: #ffffff !important;
+    border: none;
+    padding: 8px 18px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+    background-color: #ff6b81 !important;
+}
