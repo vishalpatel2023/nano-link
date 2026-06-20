@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SnapLink</title>
+    <link rel="stylesheet" href="/index_style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <a href="/" class="header-logo" style="text-decoration: none;">SnapLink</a>
+        <nav class="header-nav">
+            <div class="user-profile">
+                <span class="user-email">👤 <%= user.email %></span>
+                <a href="/" class="nav-link">Home</a>
+                <a href="/logout" class="nav-btn logout-btn">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content" style="align-items: flex-start; padding-top: 50px;">
+        <div class="dashboard-container">
+            <h1 style="text-align: left; margin-bottom: 20px;">Your Analytics</h1>
+            
+            <% if (urls.length === 0) { %>
+                <div class="shortener-card">
+                    <p style="color: #b0b0b0;">You haven't shortened any links yet!</p>
+                    <br>
+                    <a href="/" class="btn-submit" style="text-decoration: none; display: inline-block;">Create your first link ⚡</a>
+                </div>
+            <% } else { %>
+                <div class="table-wrapper">
+                    <table class="analytics-table">
+                        <thead>
+                            <tr>
+                                <th>Original URL</th>
+                                <th>Short Link</th>
+                                <th>Clicks</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% urls.forEach(url => { %>
+                                <tr>
+                                    <td class="truncate"><a href="<%= url.originalUrl %>" target="_blank" class="table-link"><%= url.originalUrl %></a></td>
+                                    <td><a href="/<%= url.shortCode %>" target="_blank" class="table-link short-text">localhost:3000/<%= url.shortCode %></a></td>
+                                    <td><span class="clicks-badge"><%= url.clicks %></span></td>
+                                    <td style="color: #b0b0b0; font-size: 0.9rem;">
+                                        <%= url.createdAt.toLocaleDateString() %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <footer class="app-footer" style="margin-top: auto;">
+        <p>&copy; 2024 SnapLink. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
