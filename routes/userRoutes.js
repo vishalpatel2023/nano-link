@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { handleUserSignup, handleUserLogin } = require('../controllers/userController');
-
+const { requireAuth } = require('../middlewares/auth');
+const { handleUserSignup, handleUserLogin, renderDashboard } = require('../controllers/userController');
 // Home page route
 router.get('/', (req, res) => {
     return res.render('index');
@@ -23,6 +23,8 @@ router.get('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 }); //deletes cookie instantly ╰(*°▽°*)╯
     res.redirect('/');
 });
+
+router.get('/dashboard', requireAuth, renderDashboard);
 
 router.post('/login', handleUserLogin);
 module.exports = router;

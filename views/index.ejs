@@ -9,6 +9,22 @@
 </head>
 <body>
 
+    <!-- <header class="app-header">
+        <a href="/" class="header-logo" style="text-decoration: none;">SnapLink</a>
+
+        <nav class="header-nav">
+            <% if (locals.user) { %>
+                <div class="user-profile">
+                    <span class="user-email">👤 <%= user.email %></span>
+                    <a href="/logout" class="nav-btn logout-btn">Logout</a>
+                </div>
+            <% } else { %>
+                <a href="/login" class="nav-link">Login</a>
+                <a href="/register" class="nav-btn">Sign Up</a>
+            <% } %>
+        </nav>
+    </header> -->
+
     <header class="app-header">
         <a href="/" class="header-logo" style="text-decoration: none;">SnapLink</a>
 
@@ -16,6 +32,9 @@
             <% if (locals.user) { %>
                 <div class="user-profile">
                     <span class="user-email">👤 <%= user.email %></span>
+                    
+                    <a href="/dashboard" class="nav-link">Dashboard</a> 
+                    
                     <a href="/logout" class="nav-btn logout-btn">Logout</a>
                 </div>
             <% } else { %>

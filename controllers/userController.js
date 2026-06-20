@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Url = require('../models/url');
 
 // Handle User Registration
 async function handleUserSignup(req, res) {
@@ -78,7 +79,21 @@ async function handleUserLogin(req, res) {
     }
 }
 
+//Render the Dashboard
+async function renderDashboard(req, res) {
+    try {
+        const userUrls = await Url.find({ createdBy: req.user.id }).sort({ createdAt: -1 });
+
+        // Pass these URLs 'dashboard.ejs' file
+        return res.render('dashboard', { urls: userUrls });
+    } catch (error) {
+        console.error("Dashboard Error:", error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     handleUserSignup,
     handleUserLogin,
+    renderDashboard
 };

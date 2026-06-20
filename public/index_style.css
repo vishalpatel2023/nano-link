@@ -255,3 +255,74 @@ h1 {
 .logout-btn:hover {
     background-color: #ff6b81 !important;
 }
+
+.dashboard-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.table-wrapper {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.analytics-table th, .analytics-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #333;
+}
+
+.analytics-table th {
+    background-color: #252525;
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.analytics-table tr:hover {
+    background-color: #2a2a2a;
+}
+
+.analytics-table tr:last-child td {
+    border-bottom: none;
+}
+
+.table-link {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.table-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.truncate {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.short-text {
+    color: #4da6ff; /* A nice subtle blue for the short link */
+}
+
+.clicks-badge {
+    background-color: #2e7d32; /* Success green */
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
