@@ -1,6 +1,6 @@
 node_modules
 .env
-CHAT_HISTORY.md
+zz_CHAT_HISTORY.md
 
 # Dependencies
 node_modules/
