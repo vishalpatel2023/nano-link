@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SnapLink | Modern URL Shortener</title>
+    <title>NanoLink | Modern URL Shortener</title>
     
     <link rel="stylesheet" href="/index_style.css">
 </head>
 <body>
     <header class="app-header">
-        <a href="/" class="header-logo" style="text-decoration: none;">SnapLink</a>
+        <a href="/" class="header-logo" style="text-decoration: none;">NanoLink</a>
 
         <nav class="header-nav">
             <% if (locals.user) { %>
                 <div class="user-profile">
-                    <span class="user-email">👤 <%= user.email %></span>
+                    <span class="user-email" style="cursor: pointer;">😎<%= user.email %></span>
                     
                     <a href="/dashboard" class="nav-link">Dashboard</a> 
                     
@@ -57,6 +57,8 @@
 
     <footer class="app-footer">
         <p>&copy; 2024 SnapLink. All rights reserved.</p>
+        <br>
+        <p>Developed By Vishal😆</p>
     </footer>
 
 </body>

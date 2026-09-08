@@ -326,3 +326,96 @@ h1 {
     font-size: 0.85rem;
     font-weight: bold;
 }
+
+.delete-btn {
+    background-color: #ff4d5a;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.delete-btn:hover {
+    background-color: #e63946;
+}
+
+.delete-btn:active {
+    transform: scale(0.97);
+}
+
+.actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copy-btn {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.copy-btn:hover {
+    background-color: #444;
+}
+
+.copy-btn:active {
+    transform: scale(0.97);
+}
+
+.stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px;
+    color: #b0b0b0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.stat-card p {
+    margin: 0;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.most-clicked-link {
+    display: block;
+    color: #66b3ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    margin-bottom: 8px;
+}
+
+.most-clicked-link:hover {
+    text-decoration: underline;
+}

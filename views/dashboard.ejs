@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | SnapLink</title>
+    <title>Dashboard | NanoLink</title>
     <link rel="stylesheet" href="/index_style.css">
 </head>
+
 <body>
 
     <header class="app-header">
-        <a href="/" class="header-logo" style="text-decoration: none;">SnapLink</a>
+        <a href="/" class="header-logo" style="text-decoration: none;">NanoLink</a>
         <nav class="header-nav">
             <div class="user-profile">
-                <span class="user-email">👤 <%= user.email %></span>
-                <a href="/" class="nav-link">Home</a>
+                <span class="user-email" style="cursor: pointer;">👤 <%= user.email %></span>
+                <!-- <a href="/" class="nav-link">Home</a> -->
                 <a href="/logout" class="nav-btn logout-btn">Logout</a>
             </div>
         </nav>
@@ -22,45 +24,137 @@
     <main class="main-content" style="align-items: flex-start; padding-top: 50px;">
         <div class="dashboard-container">
             <h1 style="text-align: left; margin-bottom: 20px;">Your Analytics</h1>
-            
-            <% if (urls.length === 0) { %>
+            <!-- new code added -->
+            <div class="stats-container">
+
+                <div class="stat-card">
+                    <h3>Total Links</h3>
+                    <p>
+                        <%= totalLinks %>
+                    </p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Total Clicks</h3>
+                    <p>
+                        <%= totalClicks %>
+                    </p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Most Clicked</h3>
+
+                    <% if (mostClickedUrl) { %>
+
+                        <a href="/<%= mostClickedUrl.shortCode %>"
+                        target="_blank"
+                        class="most-clicked-link">
+                            <%= mostClickedUrl.originalUrl %>
+                        </a>
+
+                        <p><%= mostClickedUrl.clicks %> clicks</p>
+
+                    <% } else { %>
+
+                        <p>No links yet</p>
+
+                    <% } %>
+                </div>
+
+            </div>
+
+            <% if (urls.length===0) { %>
                 <div class="shortener-card">
                     <p style="color: #b0b0b0;">You haven't shortened any links yet!</p>
                     <br>
-                    <a href="/" class="btn-submit" style="text-decoration: none; display: inline-block;">Create your first link ⚡</a>
+                    <a href="/" class="btn-submit" style="text-decoration: none; display: inline-block;">Create your
+                        first link ⚡</a>
                 </div>
-            <% } else { %>
-                <div class="table-wrapper">
-                    <table class="analytics-table">
-                        <thead>
-                            <tr>
-                                <th>Original URL</th>
-                                <th>Short Link</th>
-                                <th>Clicks</th>
-                                <th>Date Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% urls.forEach(url => { %>
+                <% } else { %>
+                    <div class="table-wrapper">
+                        <table class="analytics-table">
+                            <thead>
                                 <tr>
-                                    <td class="truncate"><a href="<%= url.originalUrl %>" target="_blank" class="table-link"><%= url.originalUrl %></a></td>
-                                    <td><a href="/<%= url.shortCode %>" target="_blank" class="table-link short-text">localhost:3000/<%= url.shortCode %></a></td>
-                                    <td><span class="clicks-badge"><%= url.clicks %></span></td>
-                                    <td style="color: #b0b0b0; font-size: 0.9rem;">
-                                        <%= url.createdAt.toLocaleDateString() %>
-                                    </td>
+                                    <th>Original URL</th>
+                                    <th>Short Link</th>
+                                    <th>Clicks</th>
+                                    <th>Date Created</th>
+                                    <th>Actions</th>
                                 </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            <% } %>
+                            </thead>
+                            <tbody>
+                                <% urls.forEach(url=> { %>
+                                    <tr>
+                                        <td class="truncate"><a href="<%= url.originalUrl %>" target="_blank"
+                                                class="table-link">
+                                                <%= url.originalUrl %>
+                                            </a></td>
+                                        <td><a href="/<%= url.shortCode %>" target="_blank"
+                                                class="table-link short-text">localhost:3000/<%= url.shortCode %></a>
+                                        </td>
+                                        <td><span class="clicks-badge">
+                                                <%= url.clicks %>
+                                            </span></td>
+                                        <td style="color: #b0b0b0; font-size: 0.9rem;">
+                                            <%= url.createdAt.toLocaleDateString() %>
+                                        </td>
+                                        <!-- <td>
+                                        <form action="/delete/<%= url._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this URL?');">
+                                            
+                                            <button type="submit" class="delete-btn">Delete</button>
+                                        </form>
+                                    </td> -->
+                                        <td class="actions-cell">
+
+                                            <button type="button" class="copy-btn"
+                                                onclick="copyShortLink('<%= url.shortCode %>', this)">
+                                                Copy
+                                            </button>
+
+                                            <form action="/delete/<%= url._id %>" method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete this URL? This action cannot be undone.');">
+
+                                                <button type="submit" class="delete-btn">
+                                                    Delete
+                                                </button>
+
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } %>
         </div>
     </main>
 
     <footer class="app-footer" style="margin-top: auto;">
         <p>&copy; 2024 SnapLink. All rights reserved.</p>
+        <br>
+        <p>Developed By Vishal😆</p>
     </footer>
 
+    <script>
+        function copyShortLink(shortCode, button) {
+
+            const shortUrl = window.location.origin + "/" + shortCode;
+
+            navigator.clipboard.writeText(shortUrl)
+                .then(() => {
+                    button.textContent = "Copied!";
+
+                    setTimeout(() => {
+                        button.textContent = "Copy";
+                    }, 1500);
+                })
+                .catch((error) => {
+                    console.error("Copy failed:", error);
+                });
+        }
+    </script>
+
 </body>
+
 </html>

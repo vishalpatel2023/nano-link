@@ -82,14 +82,65 @@ async function handleUserLogin(req, res) {
 }
 
 //Render the Dashboard
+// async function renderDashboard(req, res) {
+//     try {
+//         const userUrls = await Url.find({ createdBy: req.user.id }).sort({ createdAt: -1 });
+
+//         // Pass these URLs 'dashboard.ejs' file
+//         return res.render('dashboard', { urls: userUrls });
+//     } catch (error) {
+//         console.error("Dashboard Error:", error);
+//         return res.status(500).send("Internal Server Error");
+//     }
+// }
+
+//updated render dashboard
 async function renderDashboard(req, res) {
     try {
-        const userUrls = await Url.find({ createdBy: req.user.id }).sort({ createdAt: -1 });
+        const userUrls = await Url.find({
+            createdBy: req.user.id
+        }).sort({
+            createdAt: -1
+        });
+        const totalLinks = userUrls.length;
 
-        // Pass these URLs 'dashboard.ejs' file
-        return res.render('dashboard', { urls: userUrls });
+        const totalClicks = userUrls.reduce(
+            (total, url) => total + url.clicks,
+            0
+        );
+        let mostClickedUrl = null;
+
+        if (userUrls.length > 0) {
+            mostClickedUrl = userUrls.reduce((max, url) => {
+                return url.clicks > max.clicks ? url : max;
+            });
+        }
+        return res.render('dashboard', {
+            urls: userUrls,
+            totalLinks,
+            totalClicks,
+            mostClickedUrl
+        });
+
     } catch (error) {
         console.error("Dashboard Error:", error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
+async function handleDeleteUrl(req, res) {
+    try {
+        const { id } = req.params;
+
+        await Url.findOneAndDelete({
+            _id: id,
+            createdBy: req.user.id
+        });
+
+        return res.redirect('/dashboard');
+
+    } catch (error) {
+        console.error("Delete URL Error:", error);
         return res.status(500).send("Internal Server Error");
     }
 }
@@ -97,5 +148,6 @@ async function renderDashboard(req, res) {
 module.exports = {
     handleUserSignup,
     handleUserLogin,
-    renderDashboard
+    renderDashboard,
+    handleDeleteUrl
 };
