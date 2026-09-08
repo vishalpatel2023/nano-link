@@ -15,7 +15,9 @@ router.post('/register', handleUserSignup);
 
 //  Login routes
 router.get('/login', (req, res) => {
-    return res.render('login'); 
+    res.render('login', {
+        error: null
+    });
 });
 
 //logout route

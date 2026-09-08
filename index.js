@@ -60,6 +60,10 @@ app.use('/api/url', urlRoutes);
 
 app.get('/:shortCode', urlController.redirectUrl);
 
-app.listen(process.env.PORT,()=>{
-    console.log(`project is running on ${process.env.PORT} \n`);
+// app.listen(process.env.PORT,()=>{
+//     console.log(`project is running on ${process.env.PORT} \n`);
+// });
+
+app.listen(process.env.PORT, '127.0.0.1', () => {
+    console.log(`project is running on http://127.0.0.1:${process.env.PORT}`);
 });

@@ -39,43 +39,45 @@ async function handleUserSignup(req, res) {
 }
 
 // Handle User Login
+
 async function handleUserLogin(req, res) {
     const { email, password } = req.body;
 
-    console.log("Form Submitted Email:", email);
-    console.log("Form Submitted Password:", password);
-
     try {
-        // Find user by email
         const user = await User.findOne({ email });
+
         if (!user) {
-            return res.status(400).send("Invalid email or password.");
+            return res.status(400).render('login', {
+                error: "Invalid email or password."
+            });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        console.log(isMatch);
 
         if (!isMatch) {
-            return res.status(400).send("Invalid email or password.");
+            return res.status(400).render('login', {
+                error: "Invalid email or password."
+            });
         }
 
-        //token containing the user's ID
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { 
-            expiresIn: '3d' // expires in 3 days
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '3d' }
+        );
+
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: 3 * 24 * 60 * 60 * 1000
         });
 
-        // Send the token in a cookie
-        res.cookie('jwt', token, { 
-            httpOnly: true, 
-            maxAge: 3 * 24 * 60 * 60 * 1000 //in milleisecond
-        });
-
-        //Success! hahaha send them to the homepage.
         return res.redirect('/');
 
     } catch (error) {
         console.error("Login Error:", error);
-        return res.status(500).send("Internal Server Error");
+        return res.status(500).render('login', {
+            error: "Something went wrong. Please try again."
+        });
     }
 }
 
