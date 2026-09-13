@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics | NanoLink</title>
+
+    <link rel="stylesheet" href="/index_style.css">
+</head>
+
+<body>
+
+    <header class="app-header">
+
+        <a href="/" class="header-logo" style="text-decoration: none;">
+            NanoLink
+        </a>
+
+        <nav class="header-nav">
+
+            <div class="user-profile">
+
+                <span class="user-email">
+                    👤 <%= user.email %>
+                </span>
+
+                <a href="/dashboard" class="nav-link">
+                    Dashboard
+                </a>
+
+                <a href="/logout" class="nav-btn logout-btn">
+                    Logout
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <main class="main-content">
+
+        <div class="dashboard-container">
+
+            <h1>Link Analytics</h1>
+
+
+            <div class="analytics-summary">
+
+                <h2>Original URL</h2>
+
+                <a href="<%= url.originalUrl %>"
+                   target="_blank"
+                   class="table-link">
+
+                    <%= url.originalUrl %>
+
+                </a>
+
+
+                <h2>Short Link</h2>
+
+                <a href="/<%= url.shortCode %>"
+                   target="_blank"
+                   class="table-link">
+
+                    localhost:3000/<%= url.shortCode %>
+
+                </a>
+
+
+                <h2>Total Clicks</h2>
+
+                <p class="total-clicks">
+                    <%= url.clicks %>
+                </p>
+
+            </div>
+
+
+            <h2>Click History</h2>
+
+
+            <% if (url.clickHistory.length === 0) { %>
+
+                <p>No clicks yet.</p>
+
+            <% } else { %>
+
+                <div class="table-wrapper">
+
+                    <table class="analytics-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Date & Time</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <% url.clickHistory.forEach((click, index) => { %>
+
+                                <tr>
+
+                                    <td>
+                                        <%= index + 1 %>
+                                    </td>
+
+                                    <td>
+                                        <%= click.clickedAt.toLocaleString() %>
+                                    </td>
+
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            <% } %>
+
+
+            <br>
+
+            <a href="/dashboard"
+               class="btn-submit"
+               style="text-decoration: none; display: inline-block;">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

@@ -419,3 +419,19 @@ h1 {
 .most-clicked-link:hover {
     text-decoration: underline;
 }
+
+.analytics-btn {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.analytics-btn:hover {
+    background-color: #444;
+}

@@ -145,9 +145,33 @@ async function handleDeleteUrl(req, res) {
     }
 }
 
+async function renderAnalytics(req, res) {
+    try {
+        const { id } = req.params;
+
+        const url = await Url.findOne({
+            _id: id,
+            createdBy: req.user.id
+        });
+
+        if (!url) {
+            return res.status(404).send("URL not found");
+        }
+
+        return res.render('analytics', {
+            url
+        });
+
+    } catch (error) {
+        console.error("Analytics Error:", error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     handleUserSignup,
     handleUserLogin,
     renderDashboard,
-    handleDeleteUrl
+    handleDeleteUrl,
+    renderAnalytics
 };

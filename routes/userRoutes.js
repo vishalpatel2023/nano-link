@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../middlewares/auth');
-const { handleUserSignup, handleUserLogin, renderDashboard, handleDeleteUrl } = require('../controllers/userController');
+const { handleUserSignup, handleUserLogin, renderDashboard, handleDeleteUrl, renderAnalytics } = require('../controllers/userController');
 // Home page route
 router.get('/', (req, res) => {
     return res.render('index');
@@ -30,5 +30,6 @@ router.get('/dashboard', requireAuth, renderDashboard);
 
 router.post('/login', handleUserLogin);
 router.post('/delete/:id', requireAuth, handleDeleteUrl);
+router.get('/analytics/:id', requireAuth, renderAnalytics);
 
 module.exports = router;

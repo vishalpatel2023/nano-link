@@ -17,11 +17,10 @@ const createShortUrl = async (req, res) => {
 
         console.log("Updated URL: ",originalUrl);
 
-        // bug to fix? if same url exist in database just return it from there do not create new shortcode
+        // if same url exist in database just return it from there do not create new shortcode
         const existingUrl = await Url.findOne({ originalUrl });
         
         if (existingUrl) {
-            // If it exists, skip creation and render the existing shortcode immediately
             return res.render('result', {
                 shortCode: existingUrl.shortCode
             });
@@ -75,8 +74,47 @@ const redirectUrl = async (req, res) => {
         //console.log("Hello see this: ",url);
 
         url.clicks += 1;
+        if (!url.clickHistory) {
+            url.clickHistory = [];
+        }
+        // Get browser information
+        const userAgent = req.get('user-agent') || '';
+
+        let browser = 'Unknown';
+
+        if (userAgent.includes('Edg')) {
+            browser = 'Edge';
+        } else if (userAgent.includes('Chrome')) {
+            browser = 'Chrome';
+        } else if (userAgent.includes('Firefox')) {
+            browser = 'Firefox';
+        } else if (userAgent.includes('Safari')) {
+            browser = 'Safari';
+        }
+
+        // Get referrer domain
+        const referer = req.get('referer');
+
+        let referrer = 'Direct';
+
+        if (referer) {
+            try {
+                const referrerUrl = new URL(referer);
+                referrer = referrerUrl.hostname;
+            } catch (error) {
+                referrer = 'Unknown';
+            }
+        }
+
+        // Store click information
+        url.clickHistory.push({
+            browser,
+            referrer
+        });
+
+
         await url.save();
-        //console.log(url);
+        console.log(url);
 
         res.redirect(url.originalUrl);
 

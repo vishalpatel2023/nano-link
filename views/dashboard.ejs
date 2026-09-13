@@ -111,6 +111,10 @@
                                                 Copy
                                             </button>
 
+                                            <a href="/analytics/<%= url._id %>" class="analytics-btn">
+                                                Analytics
+                                            </a>
+
                                             <form action="/delete/<%= url._id %>" method="POST"
                                                 onsubmit="return confirm('Are you sure you want to delete this URL? This action cannot be undone.');">
 
