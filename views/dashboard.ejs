@@ -46,19 +46,19 @@
 
                     <% if (mostClickedUrl) { %>
 
-                        <a href="/<%= mostClickedUrl.shortCode %>"
-                        target="_blank"
-                        class="most-clicked-link">
+                        <a href="/<%= mostClickedUrl.shortCode %>" target="_blank" class="most-clicked-link">
                             <%= mostClickedUrl.originalUrl %>
                         </a>
 
-                        <p><%= mostClickedUrl.clicks %> clicks</p>
+                        <p>
+                            <%= mostClickedUrl.clicks %> clicks
+                        </p>
 
-                    <% } else { %>
+                        <% } else { %>
 
-                        <p>No links yet</p>
+                            <p>No links yet</p>
 
-                    <% } %>
+                            <% } %>
                 </div>
 
             </div>
@@ -89,9 +89,13 @@
                                                 class="table-link">
                                                 <%= url.originalUrl %>
                                             </a></td>
-                                        <td><a href="/<%= url.shortCode %>" target="_blank"
+                                        <!-- <td><a href="/<%= url.shortCode %>" target="_blank"
                                                 class="table-link short-text">localhost:3000/<%= url.shortCode %></a>
-                                        </td>
+                                        </td> -->
+                                        <td><a href="<%= domain %>/<%= url.shortCode %>" target="_blank"
+                                                class="table-link short-text">
+                                                <%= domain %>/<%= url.shortCode %>
+                                            </a></td>
                                         <td><span class="clicks-badge">
                                                 <%= url.clicks %>
                                             </span></td>

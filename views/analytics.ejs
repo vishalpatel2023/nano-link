@@ -52,9 +52,7 @@
 
                 <h2>Original URL</h2>
 
-                <a href="<%= url.originalUrl %>"
-                   target="_blank"
-                   class="table-link">
+                <a href="<%= url.originalUrl %>" target="_blank" class="table-link">
 
                     <%= url.originalUrl %>
 
@@ -63,12 +61,15 @@
 
                 <h2>Short Link</h2>
 
-                <a href="/<%= url.shortCode %>"
+                <!-- <a href="/<%= url.shortCode %>"
                    target="_blank"
                    class="table-link">
 
                     localhost:3000/<%= url.shortCode %>
 
+                </a> -->
+                <a href="<%= domain %>/<%= url.shortCode %>" target="_blank" class="table-link">
+                    <%= domain %>/<%= url.shortCode %>
                 </a>
 
 
@@ -84,62 +85,60 @@
             <h2>Click History</h2>
 
 
-            <% if (url.clickHistory.length === 0) { %>
+            <% if (url.clickHistory.length===0) { %>
 
                 <p>No clicks yet.</p>
 
-            <% } else { %>
+                <% } else { %>
 
-                <div class="table-wrapper">
+                    <div class="table-wrapper">
 
-                    <table class="analytics-table">
+                        <table class="analytics-table">
 
-                        <thead>
-
-                            <tr>
-                                <th>#</th>
-                                <th>Date & Time</th>
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            <% url.clickHistory.forEach((click, index) => { %>
+                            <thead>
 
                                 <tr>
-
-                                    <td>
-                                        <%= index + 1 %>
-                                    </td>
-
-                                    <td>
-                                        <%= click.clickedAt.toLocaleString() %>
-                                    </td>
-
+                                    <th>#</th>
+                                    <th>Date & Time</th>
                                 </tr>
 
-                            <% }) %>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            <% } %>
+                            </thead>
 
 
-            <br>
+                            <tbody>
 
-            <a href="/dashboard"
-               class="btn-submit"
-               style="text-decoration: none; display: inline-block;">
+                                <% url.clickHistory.forEach((click, index)=> { %>
 
-                ← Back to Dashboard
+                                    <tr>
 
-            </a>
+                                        <td>
+                                            <%= index + 1 %>
+                                        </td>
+
+                                        <td>
+                                            <%= click.clickedAt.toLocaleString() %>
+                                        </td>
+
+                                    </tr>
+
+                                    <% }) %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <% } %>
+
+
+                        <br>
+
+                        <a href="/dashboard" class="btn-submit" style="text-decoration: none; display: inline-block;">
+
+                            ← Back to Dashboard
+
+                        </a>
 
         </div>
 

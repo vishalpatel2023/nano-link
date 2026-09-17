@@ -1,28 +1,31 @@
 const Url = require('../models/url');
 const generateShortCode = require('../utils/generateShortCode');
 
-const {isValidUrl} = require('../utils/isValidUrl');
+const { isValidUrl } = require('../utils/isValidUrl');
 
 const createShortUrl = async (req, res) => {
     try {
+        const domain = `${req.protocol}://${req.get('host')}`;
+
         let { originalUrl } = req.body;
 
         originalUrl = isValidUrl(originalUrl);
 
-        if(!originalUrl){
-            return res.status(400).json({ 
-                error: "Invalid URL provided. Please enter a valid website." 
+        if (!originalUrl) {
+            return res.status(400).json({
+                error: "Invalid URL provided. Please enter a valid website."
             });
         }
 
-        console.log("Updated URL: ",originalUrl);
+        console.log("Updated URL: ", originalUrl);
 
         // if same url exist in database just return it from there do not create new shortcode
         const existingUrl = await Url.findOne({ originalUrl });
-        
+
         if (existingUrl) {
             return res.render('result', {
-                shortCode: existingUrl.shortCode
+                shortCode: existingUrl.shortCode,
+                domain: domain
             });
         }
 
@@ -32,7 +35,7 @@ const createShortUrl = async (req, res) => {
             shortCode = generateShortCode();
         } while (await Url.findOne({ shortCode }));
 
-        console.log("Updated URL: ",shortCode);
+        // console.log("Updated URL: ",shortCode);
 
         const url = await Url.create({
             originalUrl,
@@ -43,7 +46,8 @@ const createShortUrl = async (req, res) => {
         // res.status(201).json(url);
         // console.log("ese dekhoooo: ",url.shortCode);
         res.render('result', {
-            shortCode: url.shortCode
+            shortCode: url.shortCode,
+            domain: domain
         });
 
     } catch (error) {

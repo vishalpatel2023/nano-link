@@ -97,6 +97,9 @@ async function handleUserLogin(req, res) {
 //updated render dashboard
 async function renderDashboard(req, res) {
     try {
+        const domain = `${req.protocol}://${req.get('host')}`;
+        console.log("Here is our domain: ", domain);
+
         const userUrls = await Url.find({
             createdBy: req.user.id
         }).sort({
@@ -119,7 +122,8 @@ async function renderDashboard(req, res) {
             urls: userUrls,
             totalLinks,
             totalClicks,
-            mostClickedUrl
+            mostClickedUrl,
+            domain: domain
         });
 
     } catch (error) {
@@ -148,6 +152,8 @@ async function handleDeleteUrl(req, res) {
 async function renderAnalytics(req, res) {
     try {
         const { id } = req.params;
+        const domain = `${req.protocol}://${req.get('host')}`;
+        console.log("Here is our domain: ", domain);
 
         const url = await Url.findOne({
             _id: id,
@@ -159,7 +165,8 @@ async function renderAnalytics(req, res) {
         }
 
         return res.render('analytics', {
-            url
+            url: url,
+            domain: domain
         });
 
     } catch (error) {

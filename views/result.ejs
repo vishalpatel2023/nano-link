@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Link is Ready! | NanoLink</title>
     <link rel="stylesheet" href="/index_style.css">
 </head>
+
 <body>
 
     <header class="app-header">
@@ -15,12 +17,13 @@
         <nav class="header-nav">
             <% if (locals.user) { %>
                 <span class="nav-link" style="cursor: default;">👤 <%= user.email %></span>
-                <a href="/dashboard" class="nav-link">Dashboard</a> 
-                <a href="/logout" class="nav-btn" style="background-color: #ff4d4d; color: white; border: none;">Logout</a>
-            <% } else { %>
-                <a href="/login" class="nav-link">Login</a>
-                <a href="/register" class="nav-btn">Sign Up</a>
-            <% } %>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/logout" class="nav-btn"
+                    style="background-color: #ff4d4d; color: white; border: none;">Logout</a>
+                <% } else { %>
+                    <a href="/login" class="nav-link">Login</a>
+                    <a href="/register" class="nav-btn">Sign Up</a>
+                    <% } %>
         </nav>
     </header>
 
@@ -34,7 +37,12 @@
                 </div>
 
                 <div class="result-box">
-                    <a href="/<%= shortCode %>" target="_blank" class="short-url-link" id="shortUrl">http://localhost:3000/<%= shortCode %></a>
+                    <!-- <a href="/<%= shortCode %>" target="_blank" class="short-url-link" id="shortUrl">http://localhost:3000/<%= shortCode %></a>
+                    <button id="copyBtn" class="btn-copy">Copy 📋</button> -->
+
+                    <a href="<%= domain %>/<%= shortCode %>" target="_blank" class="short-url-link" id="shortUrl">
+                        <%= domain %>/<%= shortCode %>
+                    </a>
                     <button id="copyBtn" class="btn-copy">Copy 📋</button>
                 </div>
 
@@ -46,7 +54,7 @@
     </main>
 
     <footer class="app-footer">
-        <p>&copy; 2024 SnapLink. All rights reserved.</p>
+        <p>&copy; 2024 NanoLink. All rights reserved.</p>
         <br>
         <p>Developed By Vishal😆</p>
     </footer>
@@ -60,7 +68,7 @@
 
             try {
                 await navigator.clipboard.writeText(textToCopy);
-                
+
                 copyBtn.innerText = "Copied! ✅";
                 copyBtn.classList.add('copied');
 
@@ -76,4 +84,5 @@
         });
     </script>
 </body>
+
 </html>

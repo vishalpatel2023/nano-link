@@ -1,5 +1,5 @@
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+// const dns = require('dns');
+// dns.setServers(['8.8.8.8', '8.8.4.4']);  //this is for local only (because of college proxy dns problem😔)
 
 const express = require('express');
 const connectDB = require('./config/db');
@@ -16,7 +16,7 @@ const cookieParser = require('cookie-parser');
 
 dotenv.config();
 
-connectDB();
+// connectDB();
 
 const app = express();
 
@@ -40,7 +40,7 @@ app.use(async (req, res, next) => {
             } else {
                 // email ko DB se nikaalo
                 let user = await User.findById(decodedToken.id);
-                res.locals.user = user; 
+                res.locals.user = user;
                 next();
             }
         });
@@ -51,13 +51,6 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/', userRoutes);
-
-
-// app.get("/",(req,res)=>{
-//     // res.send("Home page");
-//     res.render('index');
-// });
-
 
 app.use('/api/url', urlRoutes);
 
@@ -71,7 +64,15 @@ app.get('/:shortCode', urlController.redirectUrl);
 //     console.log(`project is running on http://127.0.0.1:${process.env.PORT}`);
 // });
 
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+connectDB()
+    .then(() => {
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("DB connection failed:", err);
+    });
