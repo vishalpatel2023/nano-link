@@ -67,6 +67,8 @@ app.get('/:shortCode', urlController.redirectUrl);
 
 const PORT = process.env.PORT || 3000;
 
+console.log("URI Check:", process.env.MONGO_URI ? "Variable exists!" : " UNDEFINED - RENDER IS NOT SEEING IT"); //render ke liye
+
 connectDB()
     .then(() => {
         app.listen(PORT, "0.0.0.0", () => {

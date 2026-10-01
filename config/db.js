@@ -8,6 +8,7 @@ const connectDB = async () => {
             socketTimeoutMS: 45000,
             family: 4 // Using IPv4
         });
+        
         console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
         console.error(`Error: ${error.message}`);
