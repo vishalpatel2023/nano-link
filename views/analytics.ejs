@@ -4,144 +4,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Analytics | NanoLink</title>
-
     <link rel="stylesheet" href="/index_style.css">
+
+    <style>
+        /* ── Analytics page styles ── */
+
+        .main-content.analytics-main {
+            align-items: flex-start;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .analytics-page-title {
+            text-align: left;
+            margin-bottom: 28px;
+            font-size: 1.8rem;
+        }
+
+        /* Metadata card — holds Original URL, Short Link, Total Clicks */
+        .meta-card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        .meta-item {
+            min-width: 0;
+        }
+
+        .meta-label {
+            color: #aaa;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .meta-value {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .meta-value a {
+            color: #66b3ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .meta-value a:hover {
+            color: #99ccff;
+            text-decoration: underline;
+        }
+
+        .meta-value.clicks-big {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+        }
+
+        /* Section heading for Click History */
+        .section-heading {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        /* Empty state for no clicks */
+        .empty-clicks {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 32px 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* Table scroll wrapper for mobile */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 8px;
+        }
+
+        .analytics-table td,
+        .analytics-table th {
+            vertical-align: middle;
+        }
+
+        /* Back button — styled as ghost/secondary button */
+        .back-btn {
+            display: inline-block;
+            margin-top: 28px;
+            padding: 10px 24px;
+            color: #cccccc;
+            background: transparent;
+            border: 1px solid #555;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #2a2a2a;
+            color: #ffffff;
+            border-color: #888;
+        }
+
+        /* ── Mobile responsive ── */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 14px 16px;
+                gap: 10px;
+            }
+
+            .user-profile {
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .user-email {
+                font-size: 0.85rem;
+            }
+
+            .main-content.analytics-main {
+                padding: 20px 12px;
+            }
+
+            .analytics-page-title {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            /* Stack metadata grid to single column on mobile */
+            .meta-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .meta-card {
+                padding: 20px 16px;
+            }
+
+            .section-heading {
+                text-align: center;
+                font-size: 1.1rem;
+            }
+
+            .analytics-table th,
+            .analytics-table td {
+                padding: 12px 10px;
+                font-size: 0.85rem;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <header class="app-header">
-
-        <a href="/" class="header-logo" style="text-decoration: none;">
-            NanoLink
-        </a>
-
+        <a href="/" class="header-logo" style="text-decoration: none;">NanoLink</a>
         <nav class="header-nav">
-
             <div class="user-profile">
-
-                <span class="user-email">
-                    👤 <%= user.email %>
-                </span>
-
-                <a href="/dashboard" class="nav-link">
-                    Dashboard
-                </a>
-
-                <a href="/logout" class="nav-btn logout-btn">
-                    Logout
-                </a>
-
+                <span class="user-email">👤 <%= user.email %></span>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/logout" class="nav-btn logout-btn">Logout</a>
             </div>
-
         </nav>
-
     </header>
 
-
-    <main class="main-content">
-
+    <main class="main-content analytics-main">
         <div class="dashboard-container">
 
-            <h1>Link Analytics</h1>
+            <h1 class="analytics-page-title">Link Analytics</h1>
 
+            <!-- Metadata Card -->
+            <div class="meta-card">
+                <div class="meta-grid">
 
-            <div class="analytics-summary">
+                    <div class="meta-item">
+                        <p class="meta-label">Original URL</p>
+                        <p class="meta-value">
+                            <a href="<%= url.originalUrl %>" target="_blank">
+                                <%= url.originalUrl %>
+                            </a>
+                        </p>
+                    </div>
 
-                <h2>Original URL</h2>
+                    <div class="meta-item">
+                        <p class="meta-label">Short Link</p>
+                        <p class="meta-value">
+                            <a href="<%= domain %>/<%= url.shortCode %>" target="_blank">
+                                <%= domain %>/<%= url.shortCode %>
+                            </a>
+                        </p>
+                    </div>
 
-                <a href="<%= url.originalUrl %>" target="_blank" class="table-link">
+                    <div class="meta-item">
+                        <p class="meta-label">Total Clicks</p>
+                        <p class="meta-value clicks-big"><%= url.clicks %></p>
+                    </div>
 
-                    <%= url.originalUrl %>
-
-                </a>
-
-
-                <h2>Short Link</h2>
-
-                <!-- <a href="/<%= url.shortCode %>"
-                   target="_blank"
-                   class="table-link">
-
-                    localhost:3000/<%= url.shortCode %>
-
-                </a> -->
-                <a href="<%= domain %>/<%= url.shortCode %>" target="_blank" class="table-link">
-                    <%= domain %>/<%= url.shortCode %>
-                </a>
-
-
-                <h2>Total Clicks</h2>
-
-                <p class="total-clicks">
-                    <%= url.clicks %>
-                </p>
-
+                </div>
             </div>
 
+            <!-- Click History -->
+            <h2 class="section-heading">Click History</h2>
 
-            <h2>Click History</h2>
-
-
-            <% if (url.clickHistory.length===0) { %>
-
-                <p>No clicks yet.</p>
-
-                <% } else { %>
-
-                    <div class="table-wrapper">
-
+            <% if (url.clickHistory.length === 0) { %>
+                <div class="empty-clicks">
+                    No clicks recorded yet. Share your short link to start tracking!
+                </div>
+            <% } else { %>
+                <div class="table-wrapper">
+                    <div class="table-scroll">
                         <table class="analytics-table">
-
                             <thead>
-
                                 <tr>
                                     <th>#</th>
                                     <th>Date & Time</th>
+                                    <th>Browser</th>
+                                    <th>Referrer</th>
                                 </tr>
-
                             </thead>
-
-
                             <tbody>
-
-                                <% url.clickHistory.forEach((click, index)=> { %>
-
+                                <% url.clickHistory.forEach(function(click, index) { %>
                                     <tr>
-
-                                        <td>
-                                            <%= index + 1 %>
-                                        </td>
-
-                                        <td>
-                                            <%= click.clickedAt.toLocaleString() %>
-                                        </td>
-
+                                        <td><%= index + 1 %></td>
+                                        <td><%= click.clickedAt.toLocaleString() %></td>
+                                        <td style="color: #b0b0b0;"><%= click.browser %></td>
+                                        <td style="color: #b0b0b0;"><%= click.referrer %></td>
                                     </tr>
-
-                                    <% }) %>
-
+                                <% }) %>
                             </tbody>
-
                         </table>
-
                     </div>
+                </div>
+            <% } %>
 
-                    <% } %>
-
-
-                        <br>
-
-                        <a href="/dashboard" class="btn-submit" style="text-decoration: none; display: inline-block;">
-
-                            ← Back to Dashboard
-
-                        </a>
+            <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
 
         </div>
-
     </main>
 
 </body>
