@@ -8,8 +8,21 @@ async function handleUserSignup(req, res) {
     const { fullname, email, password, confirm_password } = req.body;
 
     try {
+        //password length constraints:
+        if (!password || password.length < 5) {
+            return res.status(400).render("register", {
+                errors: { password: "Password must be at least 5 characters." },
+                fullname,
+                email
+            });
+        }
+
         if (password !== confirm_password) {
-            return res.status(400).send("Passwords do not match.");
+            return res.status(400).render("register", {
+                errors: { confirm_password: "Passwords do not match." },
+                fullname,
+                email
+            });
         }
 
         // Check if the user already exists
@@ -34,6 +47,15 @@ async function handleUserSignup(req, res) {
 
     } catch (error) {
         console.error("Signup Error:", error);
+        
+        if (error.name === "ValidationError") {
+            const errors = {};
+            for (let field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
+            return res.status(400).render("register", { errors, fullname, email });
+        }
+
         return res.status(500).send("Internal Server Error");
     }
 }
@@ -82,17 +104,6 @@ async function handleUserLogin(req, res) {
 }
 
 //Render the Dashboard
-// async function renderDashboard(req, res) {
-//     try {
-//         const userUrls = await Url.find({ createdBy: req.user.id }).sort({ createdAt: -1 });
-
-//         // Pass these URLs 'dashboard.ejs' file
-//         return res.render('dashboard', { urls: userUrls });
-//     } catch (error) {
-//         console.error("Dashboard Error:", error);
-//         return res.status(500).send("Internal Server Error");
-//     }
-// }
 
 //updated render dashboard
 async function renderDashboard(req, res) {

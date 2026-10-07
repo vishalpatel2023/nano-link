@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-
+    <title>Register - NanoLink</title>
     <link rel="stylesheet" href="register_style.css">
+
+    <style>
+        .error-message {
+            color: #ff4d4f;
+            font-size: 0.85rem;
+            margin: -18px 0 12px 0;
+            padding: 0;
+            display: block;
+        }
+
+        .error-message.hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header class="auth-header">
@@ -19,34 +32,76 @@
 
     <div>
         <h2>Create an Account</h2>
-        <form action="" method="post">
+
+        <form id="registerForm" action="/register" method="post">
+
             <div>
                 <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" required>
+                <input 
+                    type="text" 
+                    id="fullname" 
+                    name="fullname" 
+                    value="<%= locals.fullname || '' %>" 
+                    required
+                >
+                <% if (locals.errors && errors.fullname) { %>
+                    <p class="error-message"><%= errors.fullname %></p>
+                <% } %>
             </div>
-            
-            <br>
 
+            <!-- Email Address -->
             <div>
                 <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    value="<%= locals.email || '' %>" 
+                    required
+                >
+                <!-- Backend error for email (e.g. duplicate) -->
+                <% if (locals.errors && errors.email) { %>
+                    <p class="error-message"><%= errors.email %></p>
+                <% } %>
             </div>
-            
-            <br>
 
+            <!-- Password -->
             <div>
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                >
+                <!-- Client-side password length warning-->
+                <p id="passwordError" class="error-message hidden">
+                    Password must be at least 5 characters.
+                </p>
+                <!-- Backend error for password -->
+                <% if (locals.errors && errors.password) { %>
+                    <p class="error-message"><%= errors.password %></p>
+                <% } %>
             </div>
 
-            <br>
-
+            <!-- Confirm Password -->
             <div>
                 <label for="confirm_password">Confirm Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <input 
+                    type="password" 
+                    id="confirm_password" 
+                    name="confirm_password" 
+                    required
+                >
+                <!-- Client-side mismatch warning -->
+                <p id="confirmPasswordError" class="error-message hidden">
+                    Passwords do not match.
+                </p>
+                <!-- Backend error for confirm_password -->
+                <% if (locals.errors && errors.confirm_password) { %>
+                    <p class="error-message"><%= errors.confirm_password %></p>
+                <% } %>
             </div>
-
-            <br>
 
             <div>
                 <button type="submit">Register</button>
@@ -55,8 +110,70 @@
 
         <p class="signup-link">
             Already have an account?
-            <a href="/login">Login up here</a>
+            <a href="/login">Login here</a>
         </p>
     </div>
+
+    <script>
+        // Grab form elements
+        var passwordInput = document.getElementById('password');
+        var confirmInput = document.getElementById('confirm_password');
+        var passwordError = document.getElementById('passwordError');
+        var confirmError = document.getElementById('confirmPasswordError');
+        var form = document.getElementById('registerForm');
+
+        // --- Real-time password length check ---
+        passwordInput.addEventListener('input', function () {
+            var value = passwordInput.value;
+
+            if (value.length > 0 && value.length < 5) {
+                passwordError.classList.remove('hidden');
+            } else {
+                passwordError.classList.add('hidden');
+            }
+
+            // Also re-check confirm password match
+            checkConfirmMatch();
+        });
+
+        // --- Real-time confirm password match check ---
+        confirmInput.addEventListener('input', function () {
+            checkConfirmMatch();
+        });
+
+        function checkConfirmMatch() {
+            var passValue = passwordInput.value;
+            var confirmValue = confirmInput.value;
+
+            // Only show mismatch if user has typed something in confirm field
+            if (confirmValue.length > 0 && passValue !== confirmValue) {
+                confirmError.classList.remove('hidden');
+            } else {
+                confirmError.classList.add('hidden');
+            }
+        }
+
+        // --- Block form submission if validation fails ---
+        form.addEventListener('submit', function (e) {
+            var password = passwordInput.value;
+            var confirmPassword = confirmInput.value;
+
+            // Check password length
+            if (password.length < 5) {
+                e.preventDefault();
+                passwordError.classList.remove('hidden');
+                passwordInput.focus();
+                return;
+            }
+
+            // Check passwords match
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                confirmError.classList.remove('hidden');
+                confirmInput.focus();
+                return;
+            }
+        });
+    </script>
 </body>
 </html>
